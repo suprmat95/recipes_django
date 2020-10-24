@@ -33,3 +33,13 @@ class Passage(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="passage")
     picture = models.ImageField(null=True, blank=True)
+
+class Ingredient(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    name = models.TextField()
+    question = models.ForeignKey(Question,
+                                 on_delete=models.CASCADE,
+                                 related_name="ingredient")
+    quantity = models.IntegerField(null=True, blank=True)
+    unity = models.TextField()

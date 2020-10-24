@@ -6,9 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import  APIView
 
-from ..models import Question, Answer, Passage
+from ..models import Question, Answer, Passage, Ingredient
 from ..api.serializers import QuestionSerializer, QuestionPictureSerializer\
-    , AnswerSerializer, PassageSerializer
+    , AnswerSerializer, PassageSerializer, IngredientSerializer
 from ..api.permission import IsAuthorOrReadOnly
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -44,6 +44,27 @@ class PassageCreateAPIView(generics.CreateAPIView):
         kwarg_slug = self.kwargs.get("slug")
         question = get_object_or_404(Question, slug = kwarg_slug)
         serializer.save(question=question)
+
+class IngredientCreateAPIView(generics.CreateAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        request_user = self.request.user
+        kwarg_slug = self.kwargs.get("slug")
+        question = get_object_or_404(Question, slug = kwarg_slug)
+        serializer.save(question=question)
+
+class QuestionIngredientListAPIView(generics.ListAPIView):
+    serializer_class = IngredientSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get("slug")
+        return Ingredient.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
+
+
 
 class QuestionAnswerListAPIView(generics.ListAPIView):
     serializer_class = AnswerSerializer
