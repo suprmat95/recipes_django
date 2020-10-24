@@ -25,5 +25,11 @@ class Answer(models.Model):
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                     related_name="votes")
 
-    def __str__(self):
-        return self.author.username
+class Passage(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    body = models.TextField()
+    question = models.ForeignKey(Question,
+                                 on_delete=models.CASCADE,
+                                 related_name="passage")
+    picture = models.ImageField(null=True, blank=True)

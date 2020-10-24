@@ -6,8 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import  APIView
 
-from ..models import Question, Answer
-from ..api.serializers import QuestionSerializer, QuestionPictureSerializer, AnswerSerializer
+from ..models import Question, Answer, Passage
+from ..api.serializers import QuestionSerializer, QuestionPictureSerializer\
+    , AnswerSerializer, PassageSerializer
 from ..api.permission import IsAuthorOrReadOnly
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -33,6 +34,17 @@ class AnswerCreateAPIView(generics.CreateAPIView):
 
         serializer.save(author=request_user, question=question)
 
+class PassageCreateAPIView(generics.CreateAPIView):
+    queryset = Passage.objects.all()
+    serializer_class = PassageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        request_user = self.request.user
+        kwarg_slug = self.kwargs.get("slug")
+        question = get_object_or_404(Question, slug = kwarg_slug)
+        serializer.save(question=question)
+
 class QuestionAnswerListAPIView(generics.ListAPIView):
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated]
@@ -40,6 +52,14 @@ class QuestionAnswerListAPIView(generics.ListAPIView):
     def get_queryset(self):
         kwarg_slug = self.kwargs.get("slug")
         return Answer.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
+
+class QuestionPassageListAPIView(generics.ListAPIView):
+    serializer_class = PassageSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        kwarg_slug = self.kwargs.get("slug")
+        return Passage.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
 
 class AnswerLikeAPIView(APIView):
     serializer_class = AnswerSerializer
@@ -81,4 +101,9 @@ class PictureUpdateView(generics.UpdateAPIView):
 class AnswerRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+    permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+class PassageRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Passage.objects.all()
+    serializer_class = PassageSerializer
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]

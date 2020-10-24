@@ -1,8 +1,28 @@
 from rest_framework import serializers
-from ..models import Answer, Question
+from ..models import Answer, Question, Passage
 import locale
 
 locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+
+class PassageSerializer(serializers.ModelSerializer):
+    created_at = serializers.SerializerMethodField(read_only=True)
+    question_slug = serializers.SerializerMethodField(read_only=True)
+    pictures = serializers.ImageField(read_only=True)
+
+    class Meta:
+        model = Passage
+        exclude = ["question", "updated_at"]
+
+    def get_created_at(self, instance):
+        return instance.created_at.strftime('%d %B %Y')
+
+    def get_question_slug(self, instance):
+        return instance.question.slug
+
+class PassagePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Passage
+        fields = ["pictures"]
 
 class AnswerSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
@@ -53,3 +73,5 @@ class QuestionPictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = ["pictures"]
+
+
