@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="container">
-                        <h1 class="mb-3">Aggiungi una Ricetta</h1>
-                <h3 class="mb-3 align-left">Aggiungi il titolo</h3>
+        <h1 class="mb-3">Aggiungi una Ricetta</h1>
+        <h3 class="mb-3 align-left">Aggiungi il titolo</h3>
 
         <div class="row">
             <div class="col-12">
@@ -15,35 +15,40 @@
                         v-model="questionBody"
                         class="form-control"
                         placeholder="Aggiungi titolo alla ricetta?"
-                        rows="3"
+                        rows="1"
                 ></textarea>
-                <div class="hello">
-                    <picture-input
-                            @change="onChange($event)"
-                            name="picture"
-                            ref="file"
-                            width="200"
-                            height="200"
-                            margin="16"
-                            accept="image/jpeg,image/png, image/png"
-                            size="5"
-                            buttonClass="btn"
-                            :customStrings="{
-                            upload: '<h1>RECIPEEE!</h1>',
-                            drag: 'Drag a 😺 GIF'
-                            }"
-                    >
-                    </picture-input>
+
+                <div class="hello align-right">
+
                 </div>
                 <br/>
             </div>
         </div>
         <br/>
+        <h3 class="mb-3 align-left">Aggiungi foto</h3>
+        <picture-input
+                @change="onChange($event)"
+                class="align-left"
+                name="picture"
+                ref="file"
+                width="200"
+                height="200"
+                margin="16"
+                accept="image/jpeg,image/png, image/png"
+                size="5"
+                buttonClass="btn"
+                :customStrings="{
+                            upload: '<h1>RECIPEEE!</h1>',
+                            drag: 'Drag a 😺 GIF'
+                            }"
+        >
+        </picture-input>
+        <br/>
         <br/>
         <h3 class="mb-3 align-left">Aggiungi Passaggi</h3>
 
         <ul>
-            <li v-for="(input, index) in inputs" :key="index" >
+            <li v-for="(input, index) in inputs" :key="index">
 
                 <div class="row">
                     <div class="col-12">
@@ -264,7 +269,7 @@
 
 <style scoped>
     .form-control {
-        width: 50%;
+        width: 60%;
         float: left;
     }
 
@@ -272,9 +277,8 @@
         width: 100%;
     }
 
-    .right-line {
+    .align-right {
         float: right;
-        width: 50%;
     }
 
     .hello {
@@ -282,7 +286,7 @@
         float: right;
     }
 
-   .align-left {
-       float: left;
-   }
+    .align-left {
+        float: left;
+    }
 </style>

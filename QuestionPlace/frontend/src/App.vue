@@ -37,7 +37,7 @@
 
 <style>
  * {
-    font-family: "Playfair Display", serif;
+font-family: 'Grandstander', serif;
   }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
