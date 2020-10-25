@@ -94,6 +94,19 @@
         <button @click="onSubmit" value="Upload!">Upload</button>
         <br/>
         <br/>
+        <div class="md-layout-item">
+            <md-field>
+                <md-select v-model="movie" name="movie" id="movie">
+                    <md-option value="fight-club">Fight Club</md-option>
+                    <md-option value="godfather">Godfather</md-option>
+                    <md-option value="godfather-ii">Godfather II</md-option>
+                    <md-option value="godfather-iii">Godfather III</md-option>
+                    <md-option value="godfellas">Godfellas</md-option>
+                    <md-option value="pulp-fiction">Pulp Fiction</md-option>
+                    <md-option value="scarface">Scarface</md-option>
+                </md-select>
+            </md-field>
+        </div>
 
         <p class="muted error mt-2">{{ error }}</p>
     </div>
@@ -127,6 +140,7 @@
         },
         data() {
             return {
+                movie: "good father",
                 inputs: [],
                 questionBody: this.previousQuestion || null,
                 error: null,
