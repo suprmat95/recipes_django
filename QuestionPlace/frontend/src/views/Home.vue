@@ -9,6 +9,9 @@
                                   
                                                       <p>Risposte: {{question.answers_count}}</p> -->
           <div class="col-sm">
+            <router-link
+                                :to="{ name: 'question', params: {slug: question.slug}}"
+                                class="question-link">
             <md-card>
               <md-card-media>
                 <img :src="question.picture" alt="People" />
@@ -49,6 +52,7 @@
                 </md-card-expand-content>
               </md-card-expand>
             </md-card>
+            </router-link>
           </div>
         </div>
       </div>
