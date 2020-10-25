@@ -92,6 +92,8 @@
                 question: {},
                 loadingAnswers: false,
                 answers: [],
+                ingredients: [],
+                passages: [],
                 userHasAnswered: false,
                 showForm: false,
                 newAnswerBody: null,
@@ -125,6 +127,11 @@
 
                         this.userHasAnswered = data.user_has_answered;
                         this.setPageTitle(data.content)
+                        apiService(endpoint+"passages/")
+                        .then(passages =>{
+                            this.passages= passages.results;
+                            console.log(this.passages);
+                        })
                     })
             },
             getQuestionAnswers() {
