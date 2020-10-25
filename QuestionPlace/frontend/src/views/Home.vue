@@ -4,54 +4,55 @@
       <div class="row">
         <div v-for="question in questions" :key="question.pk">
           <!--  <p class="mb-0"> Domanda aggiunta da
-                                                          <span class="author-name">{{ question.author }}</span>
-                                                      </p>
-                                  
-                                                      <p>Risposte: {{question.answers_count}}</p> -->
+                                                                    <span class="author-name">{{ question.author }}</span>
+                                                                </p>
+                                            
+                                                                <p>Risposte: {{question.answers_count}}</p> -->
           <div class="col-sm col-md">
             <router-link
-                                :to="{ name: 'question', params: {slug: question.slug}}"
-                                class="question-link">
-            <md-card>
-              <md-card-media>
-                <img :src="question.picture" alt="People" />
-              </md-card-media>
+              :to="{ name: 'question', params: { slug: question.slug } }"
+              class="question-link"
+            >
+              <md-card>
+                <md-card-media>
+                  <img :src="question.picture" alt="People" />
+                </md-card-media>
 
-              <md-card-header>
-                <div class="md-title">{{ question.content }}</div>
-                <div class="md-subhead">
-                  <p class="mb-0">
-                    Ricetta aggiunta da
-                    <span class="author-name">{{ question.author }}</span>
-                  </p>
-                  <p>Risposte: {{ question.answers_count }}</p>
-                </div>
-              </md-card-header>
-
-              <md-card-expand>
-                <md-card-actions md-alignment="space-between">
-                  <div>
-                    <md-button>Action</md-button>
-                    <md-button>Action</md-button>
+                <md-card-header>
+                  <div class="md-title">{{ question.content }}</div>
+                  <div class="md-subhead">
+                    <p class="mb-0">
+                      Ricetta aggiunta da
+                      <span class="author-name">{{ question.author }}</span>
+                    </p>
+                    <p>Risposte: {{ question.answers_count }}</p>
                   </div>
+                </md-card-header>
 
-                  <md-card-expand-trigger>
-                    <md-button class="md-icon-button">
-                      <md-icon>keyboard_arrow_down</md-icon>
-                    </md-button>
-                  </md-card-expand-trigger>
-                </md-card-actions>
+                <md-card-expand>
+                  <md-card-actions md-alignment="space-between">
+                    <div>
+                      <md-button>Action</md-button>
+                      <md-button>Action</md-button>
+                    </div>
 
-                <md-card-expand-content>
-                  <md-card-content>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Optio itaque ea, nostrum odio. Dolores, sed accusantium
-                    quasi non, voluptas eius illo quas, saepe voluptate pariatur
-                    in deleniti minus sint. Excepturi.
-                  </md-card-content>
-                </md-card-expand-content>
-              </md-card-expand>
-            </md-card>
+                    <md-card-expand-trigger>
+                      <md-button class="md-icon-button">
+                        <md-icon>keyboard_arrow_down</md-icon>
+                      </md-button>
+                    </md-card-expand-trigger>
+                  </md-card-actions>
+
+                  <md-card-expand-content>
+                    <md-card-content>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Optio itaque ea, nostrum odio. Dolores, sed accusantium
+                      quasi non, voluptas eius illo quas, saepe voluptate
+                      pariatur in deleniti minus sint. Excepturi.
+                    </md-card-content>
+                  </md-card-expand-content>
+                </md-card-expand>
+              </md-card>
             </router-link>
           </div>
         </div>
@@ -90,16 +91,20 @@ export default {
         endpoint = this.next;
       }
       this.loadingQuestions = true;
-      apiService(endpoint).then(data => {
-        console.log(data.results);
-        this.questions.push(...data.results);
-        this.loadingQuestions = false;
-        if (data.next) {
-          this.next = data.next;
-        } else {
-          this.next = null;
-        }
-      });
+      apiService(endpoint)
+        .then(data => {
+          console.log(data);
+          this.questions.push(...data.results);
+          this.loadingQuestions = false;
+          if (data.next) {
+            this.next = data.next;
+          } else {
+            this.next = null;
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   },
 

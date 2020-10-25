@@ -14,17 +14,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-1">
-                       <a href="#"></a>
-                         <router-link
+                        <a href="#"></a>
+                        <router-link
                                 :to="{ name: 'question-editor'}"
-                                class="btn btn-sm btn-danger"
-                        > Aggiungi domanda
+                        >
+                            <button class="btn btn-primary">
+                                Aggiungi Una Ricetta
+                                <md-icon>add</md-icon>
+
+                            </button>
+
                         </router-link>
+
+
                     </li>
                     <li class="nav-item mx-1">
                         <a
-                                class="btn btn-sm btn-outline-secondary"
-                                href="/accounts/logout/?next=/"
+                                class="btn btn-secondary color-logout"
+                                href="/accounts/logout/"
+                                style="color:#DDDDDD;"
                         > Logout
                         </a>
                     </li>
@@ -45,20 +53,22 @@
     .navbar-nav {
 
     }
+
     .nav-item {
         border-bottom: 20px;
         margin-bottom: 5px;
     }
+
     .my-navbar {
         border-bottom: 1px solid #DDD;
     }
 
-    .navbar-brand{
+    .navbar-brand {
         font-weight: bold;
         font-size: 130%;
 
     }
-    .navbar-brand:hover{
+    .navbar-brand:hover {
         color: #DC3545 !important;
 
 
