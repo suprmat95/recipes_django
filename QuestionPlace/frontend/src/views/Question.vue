@@ -120,6 +120,7 @@
                 apiService(endpoint)
                     .then(data => {
                         this.question = data;
+                        console.log(this.question)
                         document.getElementById("picture").setAttribute("src", this.question.picture);
 
                         this.userHasAnswered = data.user_has_answered;

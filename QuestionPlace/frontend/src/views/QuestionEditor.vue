@@ -99,7 +99,7 @@
       <md-icon>add</md-icon>
     </md-button>
 
-    <li v-for="(input, index) in inputs" :key="index">
+    <li v-for="(input, index) in inputs" :key="'A'+index">
       <div class="row">
         <div class="col-12">
           <!--   <form action="http://localhost:8000/api/questions/" -->
@@ -269,10 +269,6 @@ export default {
       }
     },
     onSubmit() {
-      console.log("token " + CSRF_TOKEN);
-      //  axios.defaults.xsrfCookieName = 'csrfmiddlewaretoken'
-      //  axios.defaults.xsrfHeaderName = "X-CSRFToken"
-      //  axios.defaults.headers.common["X-CSRFToken"] = CSRF_TOKEN;
       const headers = { "X-CSRFTOKEN": CSRF_TOKEN };
       const fd = new FormData();
 
@@ -300,6 +296,25 @@ export default {
                 console.log("recipes res");
                 console.log(res);
               });
+          });
+          this.ingredients.forEach(ingredient => {
+            const fi = new FormData();
+            console.log("Prova:");
+            console.log(ingredient.name);
+            console.log(ingredient.quantity);
+            console.log(ingredient.unity);
+            fi.append("name", ingredient.name);
+            fi.append("quantity",ingredient.quantity)
+            fi.append("unity",ingredient.unity)
+            axios
+              .post(endpoint + question_data.data.slug + "/ingredient/", fi, {
+                headers: headers
+              })
+              .then(res => {
+                console.log("recipes ingredients");
+                console.log(res);
+              });
+
           });
         })
         .catch(err => console.log(err));
@@ -337,7 +352,7 @@ export default {
     });
     this.ingredients.push({
       name: "",
-      quantity: null,
+      quantity: "",
       unity: ""
     });
   }

@@ -8,7 +8,7 @@
                                                       </p>
                                   
                                                       <p>Risposte: {{question.answers_count}}</p> -->
-          <div class="col-sm">
+          <div class="col-sm col-md">
             <router-link
                                 :to="{ name: 'question', params: {slug: question.slug}}"
                                 class="question-link">
