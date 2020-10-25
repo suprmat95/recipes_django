@@ -41,6 +41,7 @@
           accept="image/jpeg,image/png, image/png"
           size="5"
           buttonClass="btn"
+          :prefill="previousPicture"
           :customStrings="{
             upload: '<h1>RECIPEEE!</h1>',
             drag: 'Drag a 😺 GIF'
@@ -129,6 +130,7 @@
           accept="image/jpeg,image/png,image/gif"
           size="5"
           buttonClass="btn"
+          :prefill="input.picture"
           :customStrings="{
             upload: '<h1>RECIPEEE!</h1>',
             drag: 'Drag a 😺 GIF'
@@ -172,17 +174,25 @@ export default {
       type: String,
       required: false
     },
+    previousPicture: {
+      type: String,
+      required: false
+    },
     token: {
       type: String,
       required: true
+    },
+    inputs: {
+      type: Array,
+      required: false
+    },
+    ingredients: {
+      type: Array,
+      required: false
     }
   },
   data() {
     return {
-      movie: "good father",
-      inputs: [],
-      ingredients: [],
-
       questionBody: this.previousQuestion || null,
       error: null,
       picture: null
@@ -196,7 +206,12 @@ export default {
     if (to.params.slug !== undefined) {
       let endpoint = `/api/questions/${to.params.slug}/`;
       await apiService(endpoint).then(data => {
+        console.log("GUARDA QUI: ");
+        console.log(data.passage);
         to.params.previousQuestion = data.content;
+        to.params.previousPicture = data.picture;
+        to.params.inputs = data.passage;
+        to.params.ingredients = data.ingredient;
       });
     }
     return next();
@@ -346,15 +361,18 @@ export default {
   created() {
     document.title = "Editor - QuestionPlace";
     console.log("created");
-    this.inputs.push({
-      body: "",
-      image: null
-    });
-    this.ingredients.push({
-      name: "",
-      quantity: "",
-      unity: ""
-    });
+    if (this.ingredients.length === 0) {
+      this.ingredients.push({
+        name: "",
+        quantity: "",
+        unity: ""
+      });
+    }
+    //this.inputs.push({
+    //  body: "",
+    //  image: null
+    //});
+
   }
 };
 </script>
