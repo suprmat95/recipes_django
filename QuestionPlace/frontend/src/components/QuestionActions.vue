@@ -1,19 +1,18 @@
 <template lang="html">
-    <div class="question-actions">
+    <div class="question-actions" >
         <router-link
                 :to="{name: 'question-editor', params:{slug: slug}}"
-                class="btn btn-sm btn-outline-success mr-1"
         >
-            <span>Modifica</span>
+            <md-button class="button btn btn-sm ">
+                <md-icon>edit</md-icon> Modifica la ricetta
+            </md-button>
         </router-link>
-
-        <button
-                class="btn btn-sm btn-outline-danger"
+        <md-button
+                class="button btn btn-sm "
                 @click="deleteQuestion">
-            <span>Cancella</span>
-        </button>
-    </div>
-
+            <md-icon>delete</md-icon> Cancella la ricetta
+        </md-button>
+</div>
 </template>
 
 <script>
@@ -42,5 +41,12 @@
 </script>
 
 <style lang="css">
-
+    .question-actions{
+        display: inline;
+        alignment: center;
+    }
+    .button {
+        margin: 10px;
+        border: 5px;
+    }
 </style>

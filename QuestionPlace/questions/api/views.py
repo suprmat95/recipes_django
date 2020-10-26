@@ -82,6 +82,7 @@ class QuestionPassageListAPIView(generics.ListAPIView):
         kwarg_slug = self.kwargs.get("slug")
         return Passage.objects.filter(question__slug=kwarg_slug).order_by("-created_at")
 
+
 class AnswerLikeAPIView(APIView):
     serializer_class = AnswerSerializer
     permission_classes = [IsAuthenticated]
@@ -110,6 +111,7 @@ class AnswerLikeAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class PictureUpdateView(generics.UpdateAPIView):
     serializer_class = QuestionPictureSerializer
     permission_classes = [IsAuthenticated]
@@ -117,6 +119,7 @@ class PictureUpdateView(generics.UpdateAPIView):
     def get_object(self):
         question_object = self.request.question
         return question_object
+
 
 
 class AnswerRUDAPIView(generics.RetrieveUpdateDestroyAPIView):

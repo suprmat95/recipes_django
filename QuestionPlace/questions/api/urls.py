@@ -24,6 +24,14 @@ urlpatterns = [
          qv.PassageCreateAPIView.as_view(),
          name="create-passage"),
 
+    path("questions/<slug:slug>/ingredients/",
+         qv.QuestionIngredientListAPIView.as_view(),
+         name="question-ingredients-list"),
+
+    path("questions/<slug:slug>/ingredient/",
+         qv.IngredientCreateAPIView.as_view(),
+         name="create-ingredient"),
+
     path("answers/<int:pk>/",
          qv.AnswerRUDAPIView.as_view(),
          name="answer-detail"),

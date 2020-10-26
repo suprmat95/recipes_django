@@ -27,10 +27,9 @@ class PassagePictureSerializer(serializers.ModelSerializer):
 class IngredientSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField(read_only=True)
     question_slug = serializers.SerializerMethodField(read_only=True)
-    pictures = serializers.ImageField(read_only=True)
 
     class Meta:
-        model = Passage
+        model = Ingredient
         exclude = ["question", "updated_at"]
 
     def get_created_at(self, instance):
@@ -70,7 +69,8 @@ class QuestionSerializer(serializers.ModelSerializer):
     answers_count = serializers.SerializerMethodField(read_only=True)
     user_has_answered = serializers.SerializerMethodField(read_only=True)
     pictures = serializers.ImageField(read_only=True)
-
+    passage = PassageSerializer(many=True, read_only=True)
+    ingredient = IngredientSerializer(many=True, read_only=True)
     class Meta:
         model = Question
         exclude = ["updated_at"]
