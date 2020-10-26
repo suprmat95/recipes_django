@@ -13,7 +13,7 @@
 
                 <md-field>
                     <label>Titolo Ricetta</label>
-                    <md-input v-model="questionBody"></md-input>
+                    <md-input v-model="recipeBody"></md-input>
                 </md-field>
                 <br/>
             </div>
@@ -172,7 +172,7 @@
     import axios from "axios";
 
     export default {
-        name: "QuestionEditor",
+        name: "RecipeEditor",
         components: {
             PictureInput
         },
@@ -181,7 +181,7 @@
                 type: String,
                 error: null
             },
-            previousQuestion: {
+            previousRecipe: {
                 type: String,
                 required: false
             },
@@ -208,7 +208,7 @@
         },
         data() {
             return {
-                questionBody: this.previousQuestion || null,
+                recipeBody: this.previousRecipe || null,
                 recipeDescription: this.previousRecipeDescription || null,
                 inputs: [],
                 ingredients: [],
@@ -222,11 +222,11 @@
             console.log(to.params.token);
 
             if (to.params.slug !== undefined) {
-                let endpoint = `/api/questions/${to.params.slug}/`;
+                let endpoint = `/api/recipes/${to.params.slug}/`;
                 await apiService(endpoint).then(data => {
                     console.log("GUARDA QUI: ");
                     console.log(data.passage);
-                    to.params.previousQuestion = data.content;
+                    to.params.previousRecipe = data.content;
                     to.params.previousPicture = data.picture;
                     to.params.previousInputs = data.passage;
                     to.params.previousIngredients = data.ingredient;
@@ -276,7 +276,7 @@
                     console.log("Picture loaded.");
                     this.inputs[index].picture = this.dataURLtoFile(
                         event,
-                        this.questionBody + "-picture.jpg"
+                        this.recipeBody + "-picture.jpg"
                     );
                     console.log(this.inputs[index].picture);
                 } else {
@@ -292,7 +292,7 @@
                     console.log("Picture loaded.");
                     this.picture = this.dataURLtoFile(
                         event,
-                        this.questionBody + "-picture.jpg"
+                        this.recipeBody + "-picture.jpg"
                     );
                     console.log(this.picture);
                 } else {
@@ -303,25 +303,25 @@
                 const headers = {"X-CSRFTOKEN": CSRF_TOKEN};
                 const fd = new FormData();
 
-                fd.append("content", this.questionBody);
+                fd.append("content", this.recipeBody);
                 fd.append("description", this.recipeDescription);
                 fd.append("picture", this.picture, this.picture.name);
                 console.log(fd);
-                console.log("body " + this.questionBody);
+                console.log("body " + this.recipeBody);
                 console.log(this.picture);
                 console.log("picname " + this.picture.name);
 
-                const endpoint = "http://localhost:8000/api/questions/";
+                const endpoint = "http://localhost:8000/api/recipes/";
                 axios
                     .post(endpoint, fd, {headers: headers})
-                    .then(question_data => {
-                        console.log(question_data.data.slug);
+                    .then(recipe_data => {
+                        console.log(recipe_data.data.slug);
                         this.inputs.forEach(input => {
                             const fp = new FormData();
                             fp.append("body", input.body);
                             fp.append("picture", input.picture);
                             axios
-                                .post(endpoint + question_data.data.slug + "/passage/", fp, {
+                                .post(endpoint + recipe_data.data.slug + "/passage/", fp, {
                                     headers: headers
                                 })
                                 .then(res => {
@@ -340,7 +340,7 @@
                             fi.append("quantity", ingredient.quantity);
                             fi.append("unity", ingredient.unity);
                             axios
-                                .post(endpoint + question_data.data.slug + "/ingredient/", fi, {
+                                .post(endpoint + recipe_data.data.slug + "/ingredient/", fi, {
                                     headers: headers
                                 })
                                 .then(res => {
@@ -349,7 +349,7 @@
                                 });
                         });
                         console.log('Slug')
-                        console.log(question_data.slug)
+                        console.log(recipe_data.slug)
                         this.$router.push({
                             name: "home",
                             //params: {slug: question_data.data.slug}

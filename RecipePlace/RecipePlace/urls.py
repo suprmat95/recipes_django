@@ -44,7 +44,7 @@ urlpatterns = [
             include("users.api.urls")),
 
     path("api/",
-                include("questions.api.urls")),
+                include("recipes.api.urls")),
 
     path("api-auth/",
          include("rest_framework.urls")),

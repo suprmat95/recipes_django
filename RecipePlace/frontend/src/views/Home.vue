@@ -3,30 +3,25 @@
     <div class="container">
       <br/>
       <div class="row">
-        <div v-for="question in questions" :key="question.pk">
-          <!--  <p class="mb-0"> Domanda aggiunta da
-                                                                    <span class="author-name">{{ question.author }}</span>
-                                                                </p>
-
-                                                                <p>Risposte: {{question.answers_count}}</p> -->
+        <div v-for="recipe in recipes" :key="recipe.pk">
           <div class="col-sm col-md">
             <router-link
-              :to="{ name: 'question', params: { slug: question.slug } }"
-              class="question-link"
+              :to="{ name: 'recipe', params: { slug: recipe.slug } }"
+              class="recipe-link"
             >
               <md-card>
                 <md-card-media>
-                  <img :src="question.picture" alt="People" />
+                  <img :src="recipe.picture" alt="People" />
                 </md-card-media>
 
                 <md-card-header>
-                  <div class="md-title">{{ question.content }}</div>
+                  <div class="md-title">{{ recipe.content }}</div>
                   <div class="md-subhead">
                     <p class="mb-0">
                       Ricetta aggiunta da
-                      <span class="author-name">{{ question.author }}</span>
+                      <span class="author-name">{{ recipe.author }}</span>
                     </p>
-                    <p>Commenti: {{ question.answers_count }}</p>
+                    <p>Commenti: {{ recipe.comments_count }}</p>
                   </div>
                 </md-card-header>
 
@@ -46,10 +41,10 @@
         </div>
       </div>
       <div class="mt-4">
-        <p v-show="loadingQuestions">...loading...</p>
+        <p v-show="loadingRecipes">...loading...</p>
         <button
           v-show="next"
-          @click="getQuestions"
+          @click="getRecipes"
           class="btn btn-sm btn-outline-success"
         >
           Carica Ancora
@@ -67,23 +62,23 @@ export default {
 
   data() {
     return {
-      questions: [],
+      recipes: [],
       next: null,
-      loadingQuestions: false
+      loadingRecipes: false
     };
   },
   methods: {
-    getQuestions() {
-      let endpoint = "/api/questions/";
+    getRecipes() {
+      let endpoint = "/api/recipes/";
       if (this.next) {
         endpoint = this.next;
       }
-      this.loadingQuestions = true;
+      this.loadingRecipes = true;
       apiService(endpoint)
         .then(data => {
           console.log(data);
-          this.questions.push(...data.results);
-          this.loadingQuestions = false;
+          this.recipes.push(...data.results);
+          this.loadingRecipes = false;
           if (data.next) {
             this.next = data.next;
           } else {
@@ -99,7 +94,7 @@ export default {
 
   created() {
     document.title = "RecipePlace";
-    this.getQuestions();
+    this.getRecipes();
   }
 };
 </script>
@@ -109,12 +104,12 @@ export default {
   color: #dc3545;
 }
 
-.question-link {
+.recipe-link {
   font-weight: bold;
   color: black;
 }
 
-.question-link:hover {
+.recipe-link:hover {
   color: #343a40;
   text-decoration: none;
 }

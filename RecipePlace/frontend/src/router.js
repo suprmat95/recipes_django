@@ -1,10 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue"
-import Question from "./views/Question.vue";
-import QuestionEditor from "./views/QuestionEditor";
-import AnswerEditor from "./views/AnswerEditor";
-import NotFound from "./views/NotFound";
+import Recipe from "./views/Recipe.vue";
+import RecipeEditor from "./views/RecipeEditor";
+import CommentEditor from "./views/CommentEditor";
 
 Vue.use(Router);
 
@@ -17,21 +16,21 @@ export default new Router({
             component: Home
         },
         {
-            path: "/home/question/:slug",
-            name: "question",
-            component: Question,
+            path: "/home/recipe/:slug",
+            name: "recipe",
+            component: Recipe,
             props: true
         },
         {
-            path: "/home/answer/:id",
-            name: "answer-editor",
-            component: AnswerEditor,
+            path: "/home/comment/:id",
+            name: "comment-editor",
+            component: CommentEditor,
             props: true
         },
         {
             path: "/home/ask/:slug?",
-            name: "question-editor",
-            component: QuestionEditor,
+            name: "recipe-editor",
+            component: RecipeEditor,
             props: true
         },
        // {

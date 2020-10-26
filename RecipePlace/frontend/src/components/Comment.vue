@@ -1,12 +1,12 @@
 <template lang="html">
-    <div class="single-answer">
+    <div class="single-comment">
         <p class="text-muted">
-            <strong>{{answer.author}}</strong> ha risposto il {{answer.created_at}}
+            <strong>{{comment.author}}</strong> ha risposto il {{comment.created_at}}
         </p>
-        <p class="commento">{{answer.body}}</p>
-        <div v-if="isAnswerAuthor" class="answer-owner">
+        <p class="commento">{{comment.body}}</p>
+        <div v-if="isCommentAuthor" class="comment-owner">
             <router-link
-                    :to="{name:'answer-editor', params: {id: answer.id}}"
+                    :to="{name:'comment-editor', params: {id: comment.id}}"
                     >
                  <md-button class="button btn btn-sm ">
                 <md-icon>edit</md-icon> Modifica il commento
@@ -14,19 +14,19 @@
             </router-link>
             <md-button
                 class="button btn btn-sm "
-                @click="triggerDeleteAnswer">
+                @click="triggerDeleteComment">
             <md-icon>delete</md-icon> Cancella il commento
         </md-button>
 
 
         </div>
-        <div v-else class="like-answer">
+        <div v-else class="like-comment">
             <button
                     class="btn btn-sm"
                     @click="toggleLike"
                     :class="{
-                        'btn-danger': userLikedAnswer,
-                        'btn-outline-danger': !userLikedAnswer,
+                        'btn-danger': userLikedComment,
+                        'btn-outline-danger': !userLikedComment,
                     }">
                 <md-icon>thumb_up</md-icon> <strong> Mi piace [{{likesNumber}}]</strong>
             </button>
@@ -39,9 +39,9 @@
     import {apiService} from "../common/api.service";
 
     export default {
-        name: "AnswerComponent",
+        name: "CommentComponent",
         props: {
-            answer: {
+            comment: {
                 type: Object,
                 required: true
             },
@@ -52,35 +52,35 @@
         },
         data (){
             return{
-                userLikedAnswer: this.answer.user_has_voted,
-                likesNumber: this.answer.likes_count
+                userLikedComment: this.comment.user_has_voted,
+                likesNumber: this.comment.likes_count
             }
         },
         computed: {
-            isAnswerAuthor() {
-                return this.answer.author === this.requestUser;
+            isCommentAuthor() {
+                return this.comment.author === this.requestUser;
             }
         },
         methods: {
             toggleLike() {
-                this.userLikedAnswer===false
-                    ? this.likeAnswer()
-                    : this.unLikeAnswer()
+                this.userLikedComment===false
+                    ? this.likeComment()
+                    : this.unLikeComment()
             },
-            likeAnswer() {
-                this.userLikedAnswer =true;
+            likeComment() {
+                this.userLikedComment =true;
                 this.likesNumber+=1;
-                let endpoint = `/api/answers/${this.answer.id}/like/`;
+                let endpoint = `/api/comments/${this.comment.id}/like/`;
                 apiService(endpoint, "POST");
             },
-            unLikeAnswer() {
-                this.userLikedAnswer =false;
+            unLikeComment() {
+                this.userLikedComment =false;
                 this.likesNumber-=1;
-                let endpoint = `/api/answers/${this.answer.id}/like/`;
+                let endpoint = `/api/comments/${this.comment.id}/like/`;
                 apiService(endpoint, "DELETE");
             },
-            triggerDeleteAnswer() {
-                this.$emit("delete-answer",this.answer)
+            triggerDeleteComment() {
+                this.$emit("delete-comment",this.comment)
             }
         }
     }

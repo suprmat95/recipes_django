@@ -1,12 +1,12 @@
 <template lang="html">
-    <div class="single-question mt-2">
+    <div class="single-recipe mt-2">
         <div v-if="notFound" class="container">
             <h1>Ricetta non trovata!</h1>
         </div>
         <div v-else class="container">
             <div class="container">
                 <div align="right">
-                <QuestionActions v-if="isOwner" :slug="slug" />
+                <RecipeActions v-if="isOwner" :slug="slug" />
                 </div>
                 <br/>
                 <br/>
@@ -14,8 +14,8 @@
                     <img  align="center" id="picture" width="500" height="500"/>
                 </div>
                 <br/>
-                <h1>{{ question.content }}</h1>
-                <h5>{{question.description}}</h5>
+                <h1>{{ recipe.content }}</h1>
+                <h5>{{recipe.description}}</h5>
                 <hr/>
 
                 <h2 class="mb-3 align-left">Ingredienti</h2>
@@ -54,12 +54,12 @@
 
                 <p class="mb-0">
                     Ricetta aggiunta da:
-                    <span class="author-name">{{ question.author }}</span>
+                    <span class="author-name">{{ recipe.author }}</span>
                 </p>
-                <p>{{ question.created_at }}</p>
+                <p>{{ recipe.created_at }}</p>
                 <hr/>
-                <template v-if="userHasAnswered">
-                    <p class="answer-added">Hai commentanto questa ricetta.</p>
+                <template v-if="userHasCommented">
+                    <p class="comment-added">Hai commentanto questa ricetta.</p>
                 </template>
                 <template v-else-if="showForm">
                     <form class="card" @submit.prevent="onSubmit">
@@ -68,7 +68,7 @@
                         </div>
                         <div class="card-block">
               <textarea
-                      v-model="newAnswerBody"
+                      v-model="newCommentBody"
                       class="form-control"
                       placeholder="Aggiungi un commento alla ricetta"
                       rows="5"
@@ -88,18 +88,18 @@
                     </button>
                 </template>
                 <hr/>
-                <AnswerComponent
-                        v-for="(answer, index) in answers"
-                        :answer="answer"
+                <CommentComponent
+                        v-for="(comment, index) in comments"
+                        :comment="comment"
                         :requestUser="requestUser"
                         :key="index"
-                        @delete-answer="deleteAnswer"
+                        @delete-comment="deleteComment"
                 />
                 <div class="my-4">
-                    <p v-show="loadingAnswers">...loading...</p>
+                    <p v-show="loadingComments">...loading...</p>
                     <button
                             v-show="next"
-                            @click="getQuestionAnswers"
+                            @click="getRecipeComments"
                             class="btn btn-sm btn-outline-succes"
                     >
                         Carica Ancora
@@ -112,11 +112,11 @@
 
 <script>
     import {apiService} from "../common/api.service";
-    import AnswerComponent from "../components/Answer";
-    import QuestionActions from "../components/QuestionActions";
+    import CommentComponent from "../components/Comment";
+    import RecipeActions from "../components/RecipeActions";
 
     export default {
-        name: "Question",
+        name: "Recipe",
 
         props: {
             slug: {
@@ -125,19 +125,19 @@
             }
         },
         components: {
-            QuestionActions,
-            AnswerComponent
+            RecipeActions,
+            CommentComponent
         },
         data() {
             return {
-                question: {},
-                loadingAnswers: false,
-                answers: [],
+                recipe: {},
+                loadingComments: false,
+                comments: [],
                 ingredients: [],
                 passages: [],
-                userHasAnswered: false,
+                userHasCommented: false,
                 showForm: false,
-                newAnswerBody: null,
+                newCommentBody: null,
                 error: null,
                 next: null,
                 requestUser: null
@@ -145,10 +145,10 @@
         },
         computed: {
             isOwner() {
-                return this.question.author === this.requestUser;
+                return this.recipe.author === this.requestUser;
             },
             notFound() {
-                return this.question["detail"];
+                return this.recipe["detail"];
             }
         },
         methods: {
@@ -158,30 +158,30 @@
             setRequestUser() {
                 this.requestUser = window.localStorage.getItem("username");
             },
-            getQuestionData() {
-                let endpoint = `/api/questions/${this.slug}/`;
+            getRecipeData() {
+                let endpoint = `/api/recipes/${this.slug}/`;
                 apiService(endpoint).then(data => {
-                    this.question = data;
-                    console.log(this.question.passage);
-                    this.ingredients = this.question.ingredient;
-                    this.passages = this.question.passage;
+                    this.recipe = data;
+                    console.log(this.recipe.passage);
+                    this.ingredients = this.recipe.ingredient;
+                    this.passages = this.recipe.passage;
                     document
                         .getElementById("picture")
-                        .setAttribute("src", this.question.picture);
+                        .setAttribute("src", this.recipe.picture);
 
-                    this.userHasAnswered = data.user_has_answered;
+                    this.userHasCommented = data.user_has_commented;
                     this.setPageTitle(data.content);
                 });
             },
-            getQuestionAnswers() {
-                let endpoint = `/api/questions/${this.slug}/answers/`;
+            getRecipeComments() {
+                let endpoint = `/api/recipes/${this.slug}/comments/`;
                 if (this.next) {
                     endpoint = this.next;
                 }
-                this.loadingAnswers = true;
+                this.loadingComments = true;
                 apiService(endpoint).then(data => {
-                    this.answers.push(...data.results);
-                    this.loadingAnswers = false;
+                    this.comments.push(...data.results);
+                    this.loadingComments = false;
                     if (data.next) {
                         this.next = data.next;
                     } else {
@@ -190,20 +190,20 @@
                 });
             },
             onSubmit() {
-                console.log(this.newAnswerBody);
+                console.log(this.newCommentBody);
 
-                if (this.newAnswerBody) {
-                    let endpoint = `/api/questions/${this.slug}/answer/`;
+                if (this.newCommentBody) {
+                    let endpoint = `/api/recipes/${this.slug}/comment/`;
 
-                    apiService(endpoint, "POST", {body: this.newAnswerBody}).then(
+                    apiService(endpoint, "POST", {body: this.newCommentBody}).then(
                         data => {
-                            this.answers.unshift(data);
-                            console.log(this.answers);
+                            this.comments.unshift(data);
+                            console.log(this.comments);
                         }
                     );
-                    this.newAnswerBody = null;
+                    this.newCommentBody = null;
                     this.showForm = false;
-                    this.userHasAnswered = true;
+                    this.userHasCommented = true;
                     if (this.error) {
                         this.error = null;
                     }
@@ -211,28 +211,27 @@
                     this.error = "Il campo non puo essere vuoto.";
                 }
             },
-            async deleteAnswer(answer) {
-                let endpoint = `/api/answers/${answer.id}/`;
+            async deleteComment(comment) {
+                let endpoint = `/api/comment/${comment.id}/`;
                 try {
                     await apiService(endpoint, "DELETE");
-                    //  this.answers.splice(this.answers.indexOf(answer), 1);
-                    this.$delete(this.answers, this.answers.indexOf(answer));
-                    this.userHasAnswered = false;
+                    this.$delete(this.comments, this.comments.indexOf(comment));
+                    this.userHasCommented = false;
                 } catch (err) {
                     console.log(err);
                 }
             }
         },
         created() {
-            this.getQuestionData();
-            this.getQuestionAnswers();
+            this.getRecipeData();
+            this.getRecipeComments();
             this.setRequestUser();
         }
     };
 </script>
 
 <style scoped>
-    .single-question {
+    .single-recipe {
         text-align: left;
     }
 
@@ -241,7 +240,7 @@
         font-weight: bold;
     }
 
-    .answer-added {
+    .comment-added {
         color: green;
         font-weight: bold;
     }

@@ -4,7 +4,7 @@
             <div class="col-12">
                 <h1 class="mb-3">Modifica la tua risposta</h1>
                 <form @submit.prevent="onSubmit">
-                    <textarea v-model="answerBody"
+                    <textarea v-model="commentBody"
                               class="form-control"
                               rows="3"></textarea>
                     <br>
@@ -25,45 +25,45 @@
     import {apiService} from "../common/api.service";
 
     export default {
-        name: "AnswerEditor",
+        name: "CommentEditor",
         props: {
             id: {
                 type: Number,
                 required: true
             },
-            previousAnswer: {
+            previousComment: {
                 type: String,
                 required: true
             },
-            questionSlug:{
+            recipeSlug:{
                 type: String,
                 required: true
             }
         },
         async beforeRouteEnter(to, from, next) {
-            let endpoint =`/api/answers/${to.params.id}/`;
+            let endpoint =`/api/comment/${to.params.id}/`;
             await apiService(endpoint)
                     .then(data=>{
-                        to.params.previousAnswer = data.body;
-                        to.params.questionSlug = data.question_slug;
+                        to.params.previousComment = data.body;
+                        to.params.recipeSlug = data.recipe_slug;
                     })
             return next();
             },
         data() {
             return {
-                answerBody: this.previousAnswer,
+                CommentBody: this.previousComment,
                 error: null
             }
         },
         methods: {
             onSubmit() {
-                if (this.answerBody) {
-                    let endpoint = `/api/answers/${this.id}/`;
-                    apiService(endpoint, "PUT", {body: this.answerBody})
+                if (this.commentBody) {
+                    let endpoint = `/api/comment/${this.id}/`;
+                    apiService(endpoint, "PUT", {body: this.commentBody})
                         .then(()=> {
                             this.$router.push({
-                                name: "question",
-                                params: {slug: this.questionSlug}
+                                name: "recipe",
+                                params: {slug: this.recipeSlug}
                             })
                         })
 

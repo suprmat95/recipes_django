@@ -16,7 +16,7 @@
                     <li class="nav-item mx-1">
                         <a href="#"></a>
                         <router-link
-                                :to="{ name: 'question-editor'}"
+                                :to="{ name: 'recipe-editor'}"
                         >
                             <button class="btn btn-warning">
                                 Aggiungi Una Ricetta

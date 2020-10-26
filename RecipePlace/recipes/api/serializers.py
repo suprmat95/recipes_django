@@ -1,23 +1,23 @@
 from rest_framework import serializers
-from ..models import Answer, Question, Passage, Ingredient
+from ..models import Comment, Recipe, Passage, Ingredient
 import locale
 
 locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
 
 class PassageSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField(read_only=True)
-    question_slug = serializers.SerializerMethodField(read_only=True)
+    recipe_slug = serializers.SerializerMethodField(read_only=True)
     pictures = serializers.ImageField(read_only=True)
 
     class Meta:
         model = Passage
-        exclude = ["question", "updated_at"]
+        exclude = ["recipe", "updated_at"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime('%d %B %Y')
 
-    def get_question_slug(self, instance):
-        return instance.question.slug
+    def get_recipe_slug(self, instance):
+        return instance.recipe.slug
 
 class PassagePictureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,28 +26,28 @@ class PassagePictureSerializer(serializers.ModelSerializer):
 
 class IngredientSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField(read_only=True)
-    question_slug = serializers.SerializerMethodField(read_only=True)
+    recipe_slug = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Ingredient
-        exclude = ["question", "updated_at"]
+        exclude = ["recipe", "updated_at"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime('%d %B %Y')
 
-    def get_question_slug(self, instance):
-        return instance.question.slug
+    def get_recipe_slug(self, instance):
+        return instance.recipe.slug
 
 
-class AnswerSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     likes_count = serializers.SerializerMethodField(read_only=True)
     user_has_voted = serializers.SerializerMethodField(read_only=True)
-    question_slug = serializers.SerializerMethodField(read_only=True)
+    recipe_slug = serializers.SerializerMethodField(read_only=True)
     class Meta:
-        model = Answer
-        exclude = ["question", "voters", "updated_at"]
+        model = Comment
+        exclude = ["recipe", "voters", "updated_at"]
 
     def get_created_at(self, instance):
         return instance.created_at.strftime('%d %B %Y')
@@ -59,35 +59,35 @@ class AnswerSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         return instance.voters.filter(pk=request.user.pk).exists()
 
-    def get_question_slug(self, instance):
-        return instance.question.slug
+    def get_recipe_slug(self, instance):
+        return instance.recipe.slug
 
-class QuestionSerializer(serializers.ModelSerializer):
+class RecipeSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     created_at = serializers.SerializerMethodField(read_only=True)
     slug = serializers.SlugField(read_only=True)
-    answers_count = serializers.SerializerMethodField(read_only=True)
-    user_has_answered = serializers.SerializerMethodField(read_only=True)
+    comments_count = serializers.SerializerMethodField(read_only=True)
+    user_has_commented = serializers.SerializerMethodField(read_only=True)
     pictures = serializers.ImageField(read_only=True)
     passage = PassageSerializer(many=True, read_only=True)
     ingredient = IngredientSerializer(many=True, read_only=True)
     class Meta:
-        model = Question
+        model = Recipe
         exclude = ["updated_at"]
 
-    def get_answers_count(self, instance):
-        return instance.answers.count()
+    def get_comments_count(self, instance):
+        return instance.comments.count()
 
     def get_created_at(self, instance):
         return instance.created_at.strftime('%d %B %Y')
 
-    def get_user_has_answered(self, instance):
+    def get_user_has_commented(self, instance):
         request = self.context.get("request")
-        return instance.answers.filter(author=request.user).exists()
+        return instance.comments.filter(author=request.user).exists()
 
-class QuestionPictureSerializer(serializers.ModelSerializer):
+class RecipePictureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Question
+        model = Recipe
         fields = ["pictures"]
 
 

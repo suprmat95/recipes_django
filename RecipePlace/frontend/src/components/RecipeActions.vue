@@ -1,7 +1,7 @@
 <template lang="html">
-    <div class="question-actions" >
+    <div class="recioe-actions" >
         <router-link
-                :to="{name: 'question-editor', params:{slug: slug}}"
+                :to="{name: 'recipe-editor', params:{slug: slug}}"
         >
             <md-button class="button btn btn-sm ">
                 <md-icon>edit</md-icon> Modifica la ricetta
@@ -9,7 +9,7 @@
         </router-link>
         <md-button
                 class="button btn btn-sm "
-                @click="deleteQuestion">
+                @click="deleteRecipe">
             <md-icon>delete</md-icon> Cancella la ricetta
         </md-button>
 </div>
@@ -19,7 +19,7 @@
     import {apiService} from "../common/api.service";
 
     export default {
-        name: "QuestionActions",
+        name: "RecipeActions",
         props: {
             slug: {
                 type: String,
@@ -27,8 +27,8 @@
             }
         },
         methods: {
-            async deleteQuestion() {
-                let endpoint = `/api/questions/${this.slug}/`;
+            async deleteRecipe() {
+                let endpoint = `/api/recipes/${this.slug}/`;
                 try {
                     await apiService(endpoint, "DELETE");
                     this.$router.push("/home");
@@ -41,7 +41,7 @@
 </script>
 
 <style lang="css">
-    .question-actions{
+    .recipe-actions{
         display: inline;
         alignment: center;
     }

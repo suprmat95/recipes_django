@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-class Question(models.Model):
+class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=240)
@@ -9,18 +9,18 @@ class Question(models.Model):
     picture = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
-                               related_name="questions")
+                               related_name="recipes")
 
     def __str__(self):
         return self.content
 
-class Answer(models.Model):
+class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
-    question = models.ForeignKey(Question,
+    recipe = models.ForeignKey(Recipe,
                                  on_delete=models.CASCADE,
-                                 related_name="answers")
+                                 related_name="comments")
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE)
     voters = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -34,7 +34,7 @@ class Passage(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
     picture = models.ImageField(null=True, blank=True)
-    question = models.ForeignKey(Question,
+    recipe = models.ForeignKey(Recipe,
                                  on_delete=models.CASCADE,
                                  related_name="passage")
 
@@ -44,7 +44,7 @@ class Ingredient(models.Model):
     name = models.TextField()
     quantity = models.TextField()
     unity = models.TextField()
-    question = models.ForeignKey(Question,
+    recipe = models.ForeignKey(Recipe,
                                  on_delete=models.CASCADE,
                                  related_name="ingredient")
 
