@@ -6,7 +6,7 @@
           <!--  <p class="mb-0"> Domanda aggiunta da
                                                                     <span class="author-name">{{ question.author }}</span>
                                                                 </p>
-                                            
+
                                                                 <p>Risposte: {{question.answers_count}}</p> -->
           <div class="col-sm col-md">
             <router-link
@@ -127,5 +127,10 @@ export default {
   margin: 4px;
   display: inline-block;
   vertical-align: top;
+  border-radius: 15px;
+
+}
+.card-home{
+  border-radius: 15px;
 }
 </style>

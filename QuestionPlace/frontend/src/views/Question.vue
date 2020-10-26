@@ -190,8 +190,11 @@
                 });
             },
             onSubmit() {
+                console.log(this.newAnswerBody);
+
                 if (this.newAnswerBody) {
                     let endpoint = `/api/questions/${this.slug}/answer/`;
+
                     apiService(endpoint, "POST", {body: this.newAnswerBody}).then(
                         data => {
                             this.answers.unshift(data);

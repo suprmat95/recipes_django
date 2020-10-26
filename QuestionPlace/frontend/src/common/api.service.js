@@ -9,7 +9,7 @@ function  apiService(endpoint, method, data) {
         method: method || "GET",
         body: data !== undefined ? JSON.stringify(data): null,
         headers: {
-            'content-type': 'multipart/form-data',
+            'content-type': 'application/json',
             'X-CSRFToken': CSRF_TOKEN
         }
     }

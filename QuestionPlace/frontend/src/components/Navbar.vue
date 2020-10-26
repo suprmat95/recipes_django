@@ -4,7 +4,7 @@
             <router-link
                     :to="{ name: 'home'}"
                     class="navbar-brand"
-            > <b class="navbar-brand">Al.Ta Cucina </b>
+            > <b class="navbar-brand">Al.ta Cucina </b>
             </router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
