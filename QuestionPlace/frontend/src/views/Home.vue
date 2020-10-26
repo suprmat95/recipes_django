@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="home-view">
     <div class="container">
+      <br/>
       <div class="row">
         <div v-for="question in questions" :key="question.pk">
           <!--  <p class="mb-0"> Domanda aggiunta da
@@ -125,9 +126,11 @@ export default {
 .md-card {
   width: 320px;
   margin: 4px;
+  height: 400px;
   display: inline-block;
   vertical-align: top;
   border-radius: 15px;
+  margin-bottom: 15px;
 
 }
 .card-home{

@@ -7,7 +7,6 @@
         <div v-if="isAnswerAuthor" class="answer-owner">
             <router-link
                     :to="{name:'answer-editor', params: {id: answer.id}}"
-                    class="btn btn-sm "
                     >
                  <md-button class="button btn btn-sm ">
                 <md-icon>edit</md-icon> Modifica il commento
@@ -93,6 +92,6 @@
     border-radius: 5px;
     width: 40%;
     height: 50px;
-    background-color: rgba(193,255,205,0.4);
-}
+background: rgb(177,246,255);
+background: radial-gradient(circle, rgba(177,246,255,1) 0%, rgba(240,250,226,1) 100%);}
 </style>

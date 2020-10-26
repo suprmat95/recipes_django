@@ -41,7 +41,7 @@
                             <md-card-media>
                                 <img :src="passage.picture" alt="People">
                             </md-card-media>
-                            <div class="md-title"> Passagio {{index +1}} <br/></div>
+                            <div class="md-title"><p align="center">Passaggio {{index +1}} </p><hr/></div>
 
                             <md-card-content>
                                 <b>{{ passage.body }}</b>
@@ -245,4 +245,5 @@
         color: green;
         font-weight: bold;
     }
+
 </style>
