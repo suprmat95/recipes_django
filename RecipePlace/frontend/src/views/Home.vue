@@ -98,7 +98,7 @@ export default {
   },
 
   created() {
-    document.title = "QuestionPlace";
+    document.title = "RecipePlace";
     this.getQuestions();
   }
 };

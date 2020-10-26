@@ -382,7 +382,7 @@
             // }
         },
         created() {
-            document.title = "Editor - QuestionPlace";
+            document.title = "Editor - RecipePlace";
             console.log("created");
 
             if (
