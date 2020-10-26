@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     getQuestions() {
-      let endpoint = "api/questions/";
+      let endpoint = "/api/questions/";
       if (this.next) {
         endpoint = this.next;
       }
@@ -103,6 +103,7 @@ export default {
           }
         })
         .catch(e => {
+          console.log('Errror:')
           console.log(e);
         });
     }
