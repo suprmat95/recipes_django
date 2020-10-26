@@ -25,32 +25,19 @@
                       Ricetta aggiunta da
                       <span class="author-name">{{ question.author }}</span>
                     </p>
-                    <p>Risposte: {{ question.answers_count }}</p>
+                    <p>Commenti: {{ question.answers_count }}</p>
                   </div>
                 </md-card-header>
 
                 <md-card-expand>
                   <md-card-actions md-alignment="space-between">
                     <div>
-                      <md-button>Action</md-button>
-                      <md-button>Action</md-button>
+                      <md-button class="button btn btn-sm "><md-icon>favorites</md-icon></md-button>
+                      <md-button class="button btn btn-sm "><md-icon>share</md-icon></md-button>
                     </div>
-
-                    <md-card-expand-trigger>
-                      <md-button class="md-icon-button">
-                        <md-icon>keyboard_arrow_down</md-icon>
-                      </md-button>
-                    </md-card-expand-trigger>
                   </md-card-actions>
 
-                  <md-card-expand-content>
-                    <md-card-content>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Optio itaque ea, nostrum odio. Dolores, sed accusantium
-                      quasi non, voluptas eius illo quas, saepe voluptate
-                      pariatur in deleniti minus sint. Excepturi.
-                    </md-card-content>
-                  </md-card-expand-content>
+
                 </md-card-expand>
               </md-card>
             </router-link>

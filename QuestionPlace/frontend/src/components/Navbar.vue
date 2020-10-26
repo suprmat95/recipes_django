@@ -4,7 +4,7 @@
             <router-link
                     :to="{ name: 'home'}"
                     class="navbar-brand"
-            > Al.Ta Cucina
+            > <b class="navbar-brand">Al.Ta Cucina </b>
             </router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
                         <router-link
                                 :to="{ name: 'question-editor'}"
                         >
-                            <button class="btn btn-primary">
+                            <button class="btn btn-warning">
                                 Aggiungi Una Ricetta
                                 <md-icon>add</md-icon>
 
@@ -50,10 +50,6 @@
 </script>
 
 <style lang="css">
-    .navbar-nav {
-
-    }
-
     .nav-item {
         border-bottom: 20px;
         margin-bottom: 5px;
@@ -64,6 +60,7 @@
     }
 
     .navbar-brand {
+        color: goldenrod;
         font-weight: bold;
         font-size: 130%;
 

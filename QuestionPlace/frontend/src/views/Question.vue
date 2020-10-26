@@ -59,24 +59,24 @@
                 <p>{{ question.created_at }}</p>
                 <hr/>
                 <template v-if="userHasAnswered">
-                    <p class="answer-added">Hai risposto a questa domanda.</p>
+                    <p class="answer-added">Hai risposto a questa ricetta.</p>
                 </template>
                 <template v-else-if="showForm">
                     <form class="card" @submit.prevent="onSubmit">
                         <div class="card-header px-3">
-                            Aggiungi una risposta alla domanda
+                            Aggiungi un commento alla ricetta
                         </div>
                         <div class="card-block">
               <textarea
                       v-model="newAnswerBody"
                       class="form-control"
-                      placeholder="Aggiungi una risposta alla domanda"
+                      placeholder="Aggiungi un commento alla ricetta"
                       rows="5"
               ></textarea>
                         </div>
                         <div class="card-footer px-3">
                             <button type="submit" class="btn btn-sm btn-success">
-                                Aggiungi risposta
+                                Aggiungi Commento
                             </button>
                         </div>
                     </form>
@@ -84,7 +84,7 @@
                 </template>
                 <template v-else>
                     <button class="btn btn-sm btn-success" @click="showForm = true">
-                        Rispondi alla Domanda
+                        Commenta la ricetta
                     </button>
                 </template>
                 <hr/>

@@ -31,7 +31,7 @@
                 let endpoint = `/api/questions/${this.slug}/`;
                 try {
                     await apiService(endpoint, "DELETE");
-                    this.$router.push("/");
+                    this.$router.push("/home");
                 } catch (err) {
                     console.log(err);
                 }
