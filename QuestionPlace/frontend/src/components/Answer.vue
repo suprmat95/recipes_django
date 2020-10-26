@@ -3,19 +3,22 @@
         <p class="text-muted">
             <strong>{{answer.author}}</strong> ha risposto il {{answer.created_at}}
         </p>
-        <p>{{answer.body}}</p>
+        <p class="commento">{{answer.body}}</p>
         <div v-if="isAnswerAuthor" class="answer-owner">
             <router-link
                     :to="{name:'answer-editor', params: {id: answer.id}}"
-                    class="btn btn-sm btn-outline-secondary mr-1"
-                    ><span>Modifica</span>
-
+                    class="btn btn-sm "
+                    >
+                 <md-button class="button btn btn-sm ">
+                <md-icon>edit</md-icon> Modifica il commento
+            </md-button>
             </router-link>
+            <md-button
+                class="button btn btn-sm "
+                @click="triggerDeleteAnswer">
+            <md-icon>delete</md-icon> Cancella il commento
+        </md-button>
 
-            <button
-                    class="btn btn-sm btn-outline-danger"
-                    @click="triggerDeleteAnswer"
-                    >Cancella</button>
 
         </div>
         <div v-else class="like-answer">
@@ -26,7 +29,7 @@
                         'btn-danger': userLikedAnswer,
                         'btn-outline-danger': !userLikedAnswer,
                     }">
-                <strong>Mi piace [{{likesNumber}}]</strong>
+                <md-icon>thumb_up</md-icon> <strong> Mi piace [{{likesNumber}}]</strong>
             </button>
         </div>
     </div>
@@ -85,5 +88,11 @@
 </script>
 
 <style scoped>
-
+.commento {
+    border: 3px solid lightgrey;
+    border-radius: 5px;
+    width: 40%;
+    height: 50px;
+    background-color: rgba(193,255,205,0.4);
+}
 </style>

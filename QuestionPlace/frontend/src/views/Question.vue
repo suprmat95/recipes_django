@@ -59,7 +59,7 @@
                 <p>{{ question.created_at }}</p>
                 <hr/>
                 <template v-if="userHasAnswered">
-                    <p class="answer-added">Hai risposto a questa ricetta.</p>
+                    <p class="answer-added">Hai commentanto questa ricetta.</p>
                 </template>
                 <template v-else-if="showForm">
                     <form class="card" @submit.prevent="onSubmit">
