@@ -81,7 +81,6 @@ export default {
       this.loadingRecipes = true;
       apiService(endpoint)
         .then(data => {
-          console.log(data);
           this.recipes.push(...data.results);
           this.loadingRecipes = false;
           if (data.next) {

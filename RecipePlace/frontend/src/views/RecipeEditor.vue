@@ -6,11 +6,6 @@
 
         <div class="row">
             <div class="col-12">
-                <!--   <form action="http://localhost:8000/api/questions/"
-                                                                                                          method="post"
-                                                                                                          encType="multipart/form-data"
-                                                                                                        > -->
-
                 <md-field>
                     <label>Aggiugingi il titolo della ricetta</label>
                     <md-input v-model="recipeBody"></md-input>
@@ -171,7 +166,6 @@
                 </md-button>
             </div>
         </div>
-
         <p class="muted error mt-2">{{ error }}</p>
     </div>
 </template>
@@ -232,13 +226,9 @@
 
         async beforeRouteEnter(to, from, next) {
             to.params.token = CSRF_TOKEN;
-            console.log(to.params.token);
-
             if (to.params.slug !== undefined) {
                 let endpoint = `/api/recipes/${to.params.slug}/`;
                 await apiService(endpoint).then(data => {
-                    console.log("GUARDA QUI: ");
-                    console.log(data.passage);
                     to.params.previousRecipe = data.content;
                     to.params.previousPicture = data.picture;
                     to.params.previousInputs = data.passage;
@@ -254,7 +244,6 @@
                     bstr = atob(arr[1]),
                     n = bstr.length,
                     u8arr = new Uint8Array(n);
-
                 while (n--) {
                     u8arr[n] = bstr.charCodeAt(n);
                 }
@@ -283,9 +272,6 @@
             handleFileChange(event, index) {
                 console.log("New picture selected!");
                 if (event) {
-                    // document.getElementById("token").setAttribute("value", this.token);
-                    //  console.log(document.getElementById("token").getAttribute("value"));
-
                     console.log("Picture loaded.");
                     this.inputs[index].picture = this.dataURLtoFile(
                         event,
@@ -299,10 +285,6 @@
             onChange(event) {
                 console.log("New picture selected!");
                 if (event) {
-                    // document.getElementById("token").setAttribute("value", this.token);
-                    //  console.log(document.getElementById("token").getAttribute("value"));
-
-                    console.log("Picture loaded.");
                     this.picture = this.dataURLtoFile(
                         event,
                         this.recipeBody + "-picture.jpg"
@@ -315,17 +297,11 @@
             onSubmit() {
                 const headers = {"X-CSRFTOKEN": CSRF_TOKEN};
                 const fd = new FormData();
-
                 fd.append("content", this.recipeBody);
                 fd.append("description", this.recipeDescription);
                 fd.append("picture", this.picture, this.picture.name);
                 fd.append("time_to_prepare", this.time_to_prepare);
                 fd.append("people", this.people);
-                console.log(fd);
-                console.log("body " + this.recipeBody);
-                console.log(this.picture);
-                console.log("picname " + this.picture.name);
-
                 const endpoint = "http://localhost:8000/api/recipes/";
                 axios
                     .post(endpoint, fd, {headers: headers})
@@ -347,10 +323,6 @@
                         });
                         this.ingredients.forEach(ingredient => {
                             const fi = new FormData();
-                            console.log("Prova:");
-                            console.log(ingredient.name);
-                            console.log(ingredient.quantity);
-                            console.log(ingredient.unity);
                             fi.append("name", ingredient.name);
                             fi.append("quantity", ingredient.quantity);
                             fi.append("unity", ingredient.unity);
@@ -363,38 +335,14 @@
                                     console.log(res);
                                 });
                         });
-                        console.log('Slug')
-                        console.log(recipe_data.slug)
+
                         this.$router.push({
                             name: "home",
-                            //params: {slug: question_data.data.slug}
                         });
                     })
                     .catch(err => console.log(err));
             }
 
-            // onSubmit() {
-            //   if (!this.questionBody) {
-            //     this.error = "Il campo non puo essere vuoto.";
-            //   } else if (this.questionBody.length > 240) {
-            //     this.error = "Non superare i 240 caratteri.";
-            //   } else {
-            //     let endpoint = "/api/questions/";
-            //     let method = "POST";
-            //     if (this.previousQuestion) {
-            //       method = "PUT";
-            //       endpoint += `${this.slug}/`;
-            //     }
-            //     apiService(endpoint, method, {content: this.questionBody}).then(
-            //       question_data => {
-            //         this.$router.push({
-            //           name: "question",
-            //           params: { slug: question_data.slug }
-            //         });
-            //       }
-            //     );
-            //   }
-            // }
         },
         created() {
             document.title = "Editor - RecipePlace";
@@ -405,8 +353,6 @@
                 this.previousIngredients.length > 0
             ) {
                 this.ingredients = this.previousIngredients;
-                console.log("ingreedients not null");
-                console.log(this.previousIngredients);
             } else {
                 this.ingredients.push({
                     name: "",
@@ -416,19 +362,12 @@
             }
             if (this.previousInputs !== undefined && this.previousInputs.length > 0) {
                 this.inputs = this.previousInputs;
-
-                console.log("input not null");
-                console.log(this.inputs);
             } else {
                 this.inputs.push({
                     body: "",
                     image: null
                 });
             }
-            //this.inputs.push({
-            //  body: "",
-            //  image: null
-            //});
         }
     };
 </script>

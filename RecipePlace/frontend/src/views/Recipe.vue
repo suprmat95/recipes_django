@@ -171,8 +171,6 @@ export default {
       let endpoint = `/api/recipes/${this.slug}/`;
       apiService(endpoint).then(data => {
         this.recipe = data;
-        console.log("ingredienti:");
-        console.log(this.recipe.ingredient);
         this.ingredients = this.recipe.ingredient;
         this.passages = this.recipe.passage;
         document
@@ -200,17 +198,15 @@ export default {
       });
     },
     onSubmit() {
-      console.log(this.newCommentBody);
-
       if (this.newCommentBody) {
         let endpoint = `/api/recipes/${this.slug}/comment/`;
 
         apiService(endpoint, "POST", { body: this.newCommentBody }).then(
           data => {
             this.comments.unshift(data);
-            console.log(this.comments);
           }
         );
+
         this.newCommentBody = null;
         this.showForm = false;
         this.userHasCommented = true;

@@ -11,6 +11,7 @@ from ..api.serializers import RecipeSerializer, RecipePictureSerializer\
     , CommentSerializer, PassageSerializer, IngredientSerializer
 from ..api.permission import IsAuthorOrReadOnly
 
+
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all().order_by("-created_at")
     lookup_field = "slug"

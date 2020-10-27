@@ -1,5 +1,9 @@
 from django.db import models
 from django.conf import settings
+
+"""
+Model of Recipes
+"""
 class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -16,6 +20,9 @@ class Recipe(models.Model):
     def __str__(self):
         return self.content
 
+"""
+Model for Comments of Recipes
+"""
 class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -31,6 +38,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.author.username
 
+"""
+Model for Passages of Recipes
+"""
 class Passage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -40,6 +50,9 @@ class Passage(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="passage")
 
+"""
+Model for Ingredients of Recipes
+"""
 class Ingredient(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

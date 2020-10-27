@@ -45,8 +45,6 @@
             let endpoint =`/api/comment/${to.params.id}/`;
             await apiService(endpoint)
                     .then(data=>{
-                        console.log("commento: ")
-                        console.log(data)
                         to.params.previousComment = data.body;
                         to.params.recipeSlug = data.recipe_slug;
                     })
