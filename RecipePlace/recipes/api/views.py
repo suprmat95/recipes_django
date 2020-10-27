@@ -10,6 +10,7 @@ from ..models import Recipe, Comment, Passage, Ingredient
 from ..api.serializers import RecipeSerializer, RecipePictureSerializer\
     , CommentSerializer, PassageSerializer, IngredientSerializer
 from ..api.permission import IsAuthorOrReadOnly
+from django.shortcuts import redirect
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
@@ -132,3 +133,7 @@ class PassageRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Passage.objects.all()
     serializer_class = PassageSerializer
     permission_classes = [IsAuthenticated, IsAuthorOrReadOnly]
+
+def redirect_view(request):
+    response = redirect('home/')
+    return response

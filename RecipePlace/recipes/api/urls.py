@@ -1,5 +1,8 @@
+from django.conf.urls import url
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from django.views.generic import RedirectView
+
 from ..api import views as qv
 
 router = DefaultRouter()
@@ -39,6 +42,8 @@ urlpatterns = [
     path("comments/<int:pk>/like/",
          qv.CommentLikeAPIView.as_view(),
          name="comment-like"),
-    path("picture/", qv.PictureUpdateView.as_view(), name="picture-update")
+
+    path("picture/", qv.PictureUpdateView.as_view(), name="picture-update"),
+
 
 ]

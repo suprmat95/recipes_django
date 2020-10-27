@@ -13,8 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.views.generic import RedirectView
 
 from django_registration.backends.one_step.views import RegistrationView
 
@@ -57,7 +59,10 @@ urlpatterns = [
 
     re_path("home/",
             IndexTemplateView.as_view(),
-            name="entry-point")
+            name="entry-point"),
+
+    url(r'^$', RedirectView.as_view(pattern_name='entry-point', permanent=False)),
+
 ]
 
 if settings.DEBUG:
