@@ -6,7 +6,8 @@
                 <form @submit.prevent="onSubmit">
                     <textarea v-model="commentBody"
                               class="form-control"
-                              rows="3"></textarea>
+                              rows="3"
+                    ></textarea>
                     <br>
                     <button
                         class="btn btn-success"
@@ -44,6 +45,8 @@
             let endpoint =`/api/comment/${to.params.id}/`;
             await apiService(endpoint)
                     .then(data=>{
+                        console.log("commento: ")
+                        console.log(data)
                         to.params.previousComment = data.body;
                         to.params.recipeSlug = data.recipe_slug;
                     })
@@ -51,7 +54,7 @@
             },
         data() {
             return {
-                CommentBody: this.previousComment,
+                commentBody: this.previousComment,
                 error: null
             }
         },

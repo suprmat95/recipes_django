@@ -1,12 +1,12 @@
 <template lang="html">
     <div class="recioe-actions" >
-        <router-link
+      <!-- <router-link
                 :to="{name: 'recipe-editor', params:{slug: slug}}"
         >
             <md-button class="button btn btn-sm ">
                 <md-icon>edit</md-icon> Modifica la ricetta
             </md-button>
-        </router-link>
+        </router-link>  -->
         <md-button
                 class="button btn btn-sm "
                 @click="deleteRecipe">

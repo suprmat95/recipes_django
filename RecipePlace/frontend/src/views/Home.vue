@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="home-view">
     <div class="container">
-      <br/>
+      <br />
       <div class="row">
         <div v-for="recipe in recipes" :key="recipe.pk">
           <div class="col-sm col-md">
@@ -9,9 +9,9 @@
               :to="{ name: 'recipe', params: { slug: recipe.slug } }"
               class="recipe-link"
             >
-              <md-card>
+              <md-card >
                 <md-card-media>
-                  <img :src="recipe.picture" alt="People" />
+                    <img :src="recipe.picture" alt="People" style="height:210px;"/>
                 </md-card-media>
 
                 <md-card-header>
@@ -26,14 +26,19 @@
                 </md-card-header>
 
                 <md-card-expand>
-                  <md-card-actions md-alignment="space-between">
+                  <md-card-actions  md-alignment="space-between">
                     <div>
-                      <md-button class="button btn btn-sm "><md-icon>favorites</md-icon></md-button>
-                      <md-button class="button btn btn-sm "><md-icon>share</md-icon></md-button>
+                      <md-button class="button btn btn-sm ">
+                        <md-icon>favorites</md-icon>
+                      </md-button>
+                      <md-button class="button btn btn-sm ">
+                        <md-icon>share</md-icon>
+                      </md-button>
+                      <md-button class="button btn btn-sm ">
+                        <md-icon>bookmark_border</md-icon>
+                      </md-button>
                     </div>
                   </md-card-actions>
-
-
                 </md-card-expand>
               </md-card>
             </router-link>
@@ -86,7 +91,7 @@ export default {
           }
         })
         .catch(e => {
-          console.log('Errror:')
+          console.log("Errror:");
           console.log(e);
         });
     }
@@ -126,9 +131,5 @@ export default {
   vertical-align: top;
   border-radius: 15px;
   margin-bottom: 15px;
-
-}
-.card-home{
-  border-radius: 15px;
 }
 </style>

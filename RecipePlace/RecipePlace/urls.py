@@ -34,7 +34,7 @@ urlpatterns = [
     path("accounts/register/",
             RegistrationView.as_view(
                 form_class=CustomUserForm,
-                success_url="/",
+                success_url="/home",
             ), name ="django_registration_register"),
 
     path("accounts/",

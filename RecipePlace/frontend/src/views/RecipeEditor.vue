@@ -2,7 +2,7 @@
     <div class="container">
         <br/>
         <h1 class="mb-3">Aggiungi una Ricetta</h1>
-        <h3 class="mb-3 align-left">Aggiungi il titolo</h3>
+        <h3 class="mb-3 align-left">Titolo</h3>
 
         <div class="row">
             <div class="col-12">
@@ -12,7 +12,7 @@
                                                                                                         > -->
 
                 <md-field>
-                    <label>Titolo Ricetta</label>
+                    <label>Aggiugingi il titolo della ricetta</label>
                     <md-input v-model="recipeBody"></md-input>
                 </md-field>
                 <br/>
@@ -20,17 +20,12 @@
         </div>
         <br/>
         <hr/>
-        <h3 class="mb-3 align-left">Aggiungi la descrizione della ricetta</h3>
+        <h3 class="mb-3 align-left">Descrizione della ricetta</h3>
 
         <div class="row">
             <div class="col-12">
-                <!--   <form action="http://localhost:8000/api/questions/"
-                                                                                                          method="post"
-                                                                                                          encType="multipart/form-data"
-                                                                                                        > -->
-
                 <md-field>
-                    <label>Descrizione Ricetta</label>
+                    <label>Aggiungi la descrizione Ricetta</label>
                     <md-input v-model="recipeDescription"></md-input>
                 </md-field>
                 <br/>
@@ -38,7 +33,21 @@
         </div>
         <br/>
         <hr/>
-        <h3 class="mb-3 align-left">Aggiungi foto</h3>
+        <h3 class="mb-3 align-left">Durata Preparazione della ricetta</h3>
+        <md-field>
+            <label>Minuti</label>
+            <md-input type="number" id="snackbar-duration" v-model="time_to_prepare" ></md-input>
+        </md-field>
+         <br/>
+        <hr/>
+        <h3 class="mb-3 align-left">Numero di persone</h3>
+        <md-field>
+            <label>Aggiungi numero persone</label>
+            <md-input type="number" id="snackbar-duration" v-model="people" ></md-input>
+        </md-field>
+        <br/>
+        <hr/>
+        <h3 class="mb-3 align-left">Foto</h3>
         <div class="row">
             <div class="col-12">
                 <picture-input
@@ -65,7 +74,7 @@
         <br/>
         <hr/>
 
-        <h3 class="mb-3 align-left">Aggiungi Ingredienti</h3>
+        <h3 class="mb-3 align-left">Ingredienti</h3>
         <md-button
                 class="md-icon-button md-raised align-left"
                 @click="addRowIngredient"
@@ -89,6 +98,8 @@
                         <md-select v-model="ingredient.unity" name="unity" id="unity">
                             <md-option value="Grammi">Grammi</md-option>
                             <md-option value="Litri">Litri</md-option>
+                            <md-option value="Unità">Unità</md-option>
+
                         </md-select>
                     </md-field>
                     <br/>
@@ -103,7 +114,7 @@
         </li>
         <br/>
         <hr/>
-        <h3 class="mb-3 align-left">Aggiungi Passaggi</h3>
+        <h3 class="mb-3 align-left">Passaggi</h3>
         <md-button
                 class="md-icon-button md-raised align-left"
                 @click="addRowPassage"
@@ -116,7 +127,7 @@
                 <div class="col-12">
                     <!--   <form action="http://localhost:8000/api/questions/" -->
                     <md-field class="form-passage">
-                        <label>Spiegazione del passaggio</label>
+                        <label>Aggiungi la spiegazione del passaggio</label>
                         <md-input v-model="input.body"></md-input>
                     </md-field>
                     <md-button
@@ -204,12 +215,14 @@
             previousRecipeDescription: {
                 type: String,
                 required: false
-            }
+            },
         },
         data() {
             return {
                 recipeBody: this.previousRecipe || null,
                 recipeDescription: this.previousRecipeDescription || null,
+                time_to_prepare: null,
+                people: null,
                 inputs: [],
                 ingredients: [],
                 error: null,
@@ -306,6 +319,8 @@
                 fd.append("content", this.recipeBody);
                 fd.append("description", this.recipeDescription);
                 fd.append("picture", this.picture, this.picture.name);
+                fd.append("time_to_prepare", this.time_to_prepare);
+                fd.append("people", this.people);
                 console.log(fd);
                 console.log("body " + this.recipeBody);
                 console.log(this.picture);

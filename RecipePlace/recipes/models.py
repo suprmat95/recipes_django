@@ -5,6 +5,8 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=240)
     description = models.CharField(max_length=1000)
+    time_to_prepare = models.CharField(max_length=10)
+    people = models.CharField(max_length=10)
     slug = models.SlugField(max_length=255, unique=True)
     picture = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
