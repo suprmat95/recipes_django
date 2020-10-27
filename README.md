@@ -1,11 +1,16 @@
 # question-place-django
+## Prerequisites
+* Python3
+* pip
+* npm
 ## Creation virtual environment
 ```bash
-$ python -m venv venv   # crezione ambiente virtuale
-$ cd venv               # entro nella cartella appena generata dal comando precedente
+$ python3 -m venv venv  
+$ cd venv              
 $ . bin/activate  
 ```
 ## Start Django back-end
+In home folder of the repository
 ```bash
 $ pip install -r requirements.txt
 $ cd RecipePlace                    
@@ -19,5 +24,3 @@ $ npm run serve --fix
 ```
 ## Visualize Project
 Open chrome on "http://127.0.0.1:8000/home"
-
-
