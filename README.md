@@ -1,4 +1,4 @@
-# question-place-django
+# recipe-place-django
 ## Prerequisites
 * Python3
 * pip
