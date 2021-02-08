@@ -7,7 +7,7 @@
 ```bash
 $ python3 -m venv venv  
 $ cd venv              
-$ . bin/activate  
+$ source bin/activate  
 ```
 ## Start Django back-end
 In home folder of the repository
